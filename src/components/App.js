@@ -3,9 +3,24 @@ import { useState } from 'react';
 
 function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [lastLetter, setLastLetter] = useState('');
+  function handleInput (event){
+    console.log(event.target.value)
+    const inputValue = event.target.value;
+    const letters =[/^[a-zA-Z]+$/];
+    if(inputValue.match(letters)){
+    setLastLetter(inputValue);
+    }else{
+      console.log('no funciona')
+    }
+  }
   function handleClick() {
     setNumberOfErrors(numberOfErrors + 1);
   }
+  const handleSubmit= (event) => {
+    event.preventDefault();
+  }
+
   return <div className="App">
     <div className="page">
       <header>
@@ -39,7 +54,7 @@ function App() {
               <li className="letter">x</li>
             </ul>
           </div>
-          <form className="form">
+          <form className="form" onSubmit={handleSubmit}>
             <label className="title" htmlFor="last-letter">Escribe una letra:</label>
             <input
               autoComplete="off"
@@ -47,7 +62,9 @@ function App() {
               maxLength="1"
               type="text"
               name="last-letter"
-              id="last-letter"
+              id="last-letter"              
+              value={lastLetter}
+              onInput={handleInput}
             />
           </form>
         </section>
