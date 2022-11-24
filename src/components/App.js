@@ -4,7 +4,13 @@ import { useState } from 'react';
 function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
+  const [word, setWord] = useState('gallina');
   
+  function renderSolutionLetters (){
+  const wordLetters = word.split(''); //split() divide un objeto de tipo String en un array
+  return wordLetters.map((eachletter,index) => ( <li className="letter" key={index}></li>))
+  
+}
   function handleInput (event){
     console.log(event.target.value)
     const inputValue = event.target.value;
@@ -17,7 +23,7 @@ function App() {
     }
   }
   function handleClick() {
-    setNumberOfErrors(numberOfErrors + 1);
+    setNumberOfErrors(numberOfErrors + 1); // sumamos 1 a la variable
   }
   const handleSubmit= (event) => {
     event.preventDefault();
@@ -33,7 +39,8 @@ function App() {
           <div className="solution">
             <h2 className="title">Solución:</h2>
             <ul className="letters">
-              <li className="letter">k</li>
+              {renderSolutionLetters()}
+              {/* <li className="letter">k</li>
               <li className="letter">a</li>
               <li className="letter"></li>
               <li className="letter">a</li>
@@ -42,7 +49,7 @@ function App() {
               <li className="letter"></li>
               <li className="letter">k</li>
               <li className="letter">e</li>
-              <li className="letter">r</li>
+              <li className="letter">r</li> */}
             </ul>
           </div>
           <button onClick={handleClick}>Incrementar</button>
