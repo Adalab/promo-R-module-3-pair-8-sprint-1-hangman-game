@@ -4,13 +4,15 @@ import { useState } from 'react';
 function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
+  
   function handleInput (event){
     console.log(event.target.value)
     const inputValue = event.target.value;
-    const letters =[/^[a-zA-Z]+$/];
-    if(inputValue.match(letters)){
+    const letters =/^[a-zA-Z]+$/; //función test que devuelve si es true o false, y comprueba si el input (entre paréntesis) coindice con la expresión regular
+    if(letters.test(inputValue)){
     setLastLetter(inputValue);
     }else{
+      setLastLetter('');
       console.log('no funciona')
     }
   }
@@ -62,7 +64,8 @@ function App() {
               maxLength="1"
               type="text"
               name="last-letter"
-              id="last-letter"              
+              id="last-letter" 
+              pattern="[a-zA-Z]"             
               value={lastLetter}
               onInput={handleInput}
             />
