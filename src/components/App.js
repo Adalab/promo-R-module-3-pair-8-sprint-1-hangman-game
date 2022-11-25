@@ -5,19 +5,30 @@ function App() {
   const [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
   const [word, setWord] = useState('gallina');
-  
-  function renderSolutionLetters (){
-  const wordLetters = word.split(''); //split() divide un objeto de tipo String en un array
-  return wordLetters.map((eachletter,index) => ( <li className="letter" key={index}></li>))
-  
-}
-  function handleInput (event){
+  const [userLetters, setUserLetters] = useState([]);
+
+  function renderSolutionLetters() {
+    const wordLetters = word.split(''); //split() divide un objeto de tipo String en un array
+    return wordLetters.map((eachLetter, index) => {
+      if (userLetters.includes(eachLetter)) {
+        return (<li className="letter" key={index}>{eachLetter}</li>);
+      }
+      else {
+        return (<li className="letter" key={index}></li>)
+      }
+    })
+  }
+  //function renderErrorLetters (){}
+
+
+  function handleInput(event) {
     console.log(event.target.value)
     const inputValue = event.target.value;
-    const letters =/^[a-zA-Z]+$/; //función test que devuelve si es true o false, y comprueba si el input (entre paréntesis) coindice con la expresión regular
-    if(letters.test(inputValue)){
-    setLastLetter(inputValue);
-    }else{
+    const letters = /^[a-zA-Z]+$/; //función test que devuelve si es true o false, y comprueba si el input (entre paréntesis) coindice con la expresión regular
+    if (letters.test(inputValue)) {
+      setLastLetter(inputValue);
+      setUserLetters([...userLetters, inputValue]);
+    } else {
       setLastLetter('');
       console.log('no funciona')
     }
@@ -25,7 +36,7 @@ function App() {
   function handleClick() {
     setNumberOfErrors(numberOfErrors + 1); // sumamos 1 a la variable
   }
-  const handleSubmit= (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
   }
 
@@ -40,16 +51,6 @@ function App() {
             <h2 className="title">Solución:</h2>
             <ul className="letters">
               {renderSolutionLetters()}
-              {/* <li className="letter">k</li>
-              <li className="letter">a</li>
-              <li className="letter"></li>
-              <li className="letter">a</li>
-              <li className="letter">k</li>
-              <li className="letter">r</li>
-              <li className="letter"></li>
-              <li className="letter">k</li>
-              <li className="letter">e</li>
-              <li className="letter">r</li> */}
             </ul>
           </div>
           <button onClick={handleClick}>Incrementar</button>
@@ -71,8 +72,8 @@ function App() {
               maxLength="1"
               type="text"
               name="last-letter"
-              id="last-letter" 
-              pattern="[a-zA-Z]"             
+              id="last-letter"
+              pattern="[a-zA-Z]"
               value={lastLetter}
               onInput={handleInput}
             />
